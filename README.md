@@ -73,12 +73,12 @@ Navigate to **[http://localhost:3000/docs](http://localhost:3000/docs)** to expl
 
 | Method | Endpoint | Auth Required | Description |
 |--------|----------|:------------:|-------------|
-| `GET` | `/public/info` | ❌ No | Returns publicly available data |
-| `POST` | `/auth/signup` | ❌ No | Creates a new user account via Supabase |
-| `POST` | `/auth/login` | ❌ No | Authenticates user and returns a JWT access token |
-| `POST` | `/auth/logout` | ✅ Bearer | Terminates user session (returns 204 No Content) |
-| `GET` | `/protected/profile` | ✅ Bearer | Returns authenticated user's profile data |
-| `GET` | `/protected/dashboard` | ✅ Bearer | Returns authenticated user's dashboard data |
+| `GET` | `/public/info` | No | Returns publicly available data |
+| `POST` | `/auth/signup` | No | Creates a new user account via Supabase |
+| `POST` | `/auth/login` | No | Authenticates user and returns a JWT access token |
+| `POST` | `/auth/logout` | Bearer | Terminates user session (returns 204 No Content) |
+| `GET` | `/protected/profile` | Bearer | Returns authenticated user's profile data |
+| `GET` | `/protected/dashboard` | Bearer | Returns authenticated user's dashboard data |
 
 ### Authentication Flow
 
@@ -118,10 +118,10 @@ The Swagger UI at `/docs` provides:
 1. `POST /auth/signup` — Create a user with email + password
 2. `POST /auth/login` — Log in and copy the `access_token` from the response
 3. Click **Authorize** → Paste the token → Click **Authorize**
-4. `GET /protected/profile` — Should return your user data ✅
-5. `GET /protected/dashboard` — Should return dashboard data ✅
-6. `GET /public/info` — Works without authentication ✅
-7. `POST /auth/logout` — Returns 204 No Content ✅
+4. `GET /protected/profile` — Should return your user data
+5. `GET /protected/dashboard` — Should return dashboard data
+6. `GET /public/info` — Works without authentication
+7. `POST /auth/logout` — Returns 204 No Content
 
 ### Via curl
 
