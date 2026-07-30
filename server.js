@@ -77,7 +77,7 @@ function getBearerToken(req) {
 async function verifyToken(req, res, next) {
   const token = getBearerToken(req);
   if (!token) {
-    return res.status(401).json({ error: 'Missing bearer token' });
+    return res.status(401).json({ error: 'Access token required' });
   }
 
   try {
@@ -113,10 +113,10 @@ async function verifyToken(req, res, next) {
  *               properties:
  *                 message:
  *                   type: string
- *                   example: This is public information
+ *                   example: Welcome stranger! This info is public.
  */
 app.get('/public/info', (req, res) => {
-  res.json({ message: 'This is public information' });
+  res.json({ message: 'Welcome stranger! This info is public.' });
 });
 
 // ─── Auth Routes ────────────────────────────────────────────────────
