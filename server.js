@@ -325,6 +325,12 @@ app.post('/auth/logout', verifyToken, async (req, res) => {
  *                       type: string
  *                     email:
  *                       type: string
+ *                     role:
+ *                       type: string
+ *                     created_at:
+ *                       type: string
+ *                     last_sign_in_at:
+ *                       type: string
  *       401:
  *         description: Missing or invalid token
  */
@@ -334,6 +340,9 @@ app.get('/protected/profile', verifyToken, (req, res) => {
     user: {
       id: req.user.id,
       email: req.user.email,
+      role: req.user.role,
+      created_at: req.user.created_at,
+      last_sign_in_at: req.user.last_sign_in_at,
     },
   });
 });
