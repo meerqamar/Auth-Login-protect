@@ -104,7 +104,7 @@ Navigate to **[http://localhost:3000/docs](http://localhost:3000/docs)** to expl
 
 ## Swagger UI
 
-![Swagger UI showing all API endpoints with Authorize button](swagger-ui-screenshot.png)
+![Swagger UI showing all API endpoints with Authorize button](Swagger.png)
 
 The Swagger UI at `/docs` provides:
 - **Authorize button** — Paste your JWT to test protected endpoints
