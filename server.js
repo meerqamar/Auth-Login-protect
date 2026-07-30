@@ -267,8 +267,8 @@ app.post('/auth/login', async (req, res) => {
  *     security:
  *       - bearerAuth: []
  *     responses:
- *       200:
- *         description: User logged out successfully
+ *       204:
+ *         description: User logged out successfully (no content)
  *       401:
  *         description: Missing or invalid token
  *       500:
@@ -276,19 +276,14 @@ app.post('/auth/login', async (req, res) => {
  */
 app.post('/auth/logout', verifyToken, async (req, res) => {
   try {
-    // With the anon key we cannot revoke tokens server-side.
     // The middleware already verified the token is valid.
-    // We signal the client to discard its token.
+    // Call Supabase signOut then return 204 No Content.
     const { error } = await supabase.auth.signOut();
     if (error) {
-      // Non-fatal: the token is still valid until it expires, but
-      // we still tell the client to discard it.
       console.warn('Supabase signOut warning:', error.message);
     }
 
-    return res.status(200).json({
-      message: 'User logged out successfully. Please discard your token.',
-    });
+    return res.status(204).send();
   } catch (err) {
     return res.status(500).json({ error: 'Logout failed' });
   }
@@ -343,6 +338,51 @@ app.get('/protected/profile', verifyToken, (req, res) => {
       role: req.user.role,
       created_at: req.user.created_at,
       last_sign_in_at: req.user.last_sign_in_at,
+    },
+  });
+});
+
+/**
+ * @openapi
+ * /protected/dashboard:
+ *   get:
+ *     tags:
+ *       - Protected
+ *     summary: Protected dashboard endpoint
+ *     description: >
+ *       Returns dashboard data for the authenticated user.
+ *       Uses the reusable verifyToken middleware to validate the JWT.
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Dashboard data returned successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 dashboard:
+ *                   type: object
+ *                   properties:
+ *                     user_id:
+ *                       type: string
+ *                     email:
+ *                       type: string
+ *                     welcome:
+ *                       type: string
+ *       401:
+ *         description: Missing or invalid token
+ */
+app.get('/protected/dashboard', verifyToken, (req, res) => {
+  res.json({
+    message: 'Dashboard data',
+    dashboard: {
+      user_id: req.user.id,
+      email: req.user.email,
+      welcome: `Welcome back, ${req.user.email}!`,
     },
   });
 });
